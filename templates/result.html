@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-frame">
+        <div class="title-bar">
+            <span class="icon">🛡️</span>
+            <span>DEEPFAKE DETECTOR PRO</span>
+            <span class="premium">PREMIUM</span>
+        </div>
+        <div class="content-frame">
+            <div class="control-panel">
+                <div class="tab-control">
+                    <div class="tab analysis-tab">
+                        <h3>DETECTION RESULT:</h3>
+                        <p id="resultText" class="{{ 'fake' if result == 'FAKE' else 'authentic' }}">{{ result }}</p>
+                        <p id="confidenceText">Confidence: {{ "%.1f"|format(confidence * 100) }}%</p>
+                        <progress value="{{ confidence * 100 }}" max="100"></progress>
+                        <h3>HISTORY</h3>
+                        <ul>
+                            {% for item in history %}
+                                <li>{{ item[3] }} - {{ item[2] }} - {{ item[0] }} ({{ "%.1f"|format(item[1] * 100) }}%)</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="{{ url_for('uploaded_file', filename=filename) }}" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        <div class="footer-frame">
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
